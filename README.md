@@ -50,12 +50,72 @@ Connect-RMTenant -tenant_subdomain sometenant -Credential $Credential
 Connect-RMTenant -tenant_subdomain sometenant -Credential $ServiceUserCredential -PlatformToken
 ```
 
+### Risks and Findings
+
+`Get-RMRiskSummary` gives the tenant-wide picture; `Get-RMRiskType` aggregates it by risk type, and `Get-RMFinding` lists the individual findings. Both list commands page automatically:
+
+```powershell
+# The whole tenant, by entity type and category
+Get-RMRiskSummary
+
+# Critical and high risk types, most recently updated first
+Get-RMRiskType -severity CRITICAL, HIGH -sort updatedAt:desc
+
+# Open findings against users, updated in the last week
+Get-RMFinding -status OPEN -entityTypes USER -daysSinceLastUpdate 7
+```
+
+A finding can be snoozed for a period, which excludes it from risk summary counts until the snooze expires:
+
+```powershell
+Suspend-RMFinding -findingId $id -durationDays 30 -reason 'Accepted risk pending Q3 review'
+
+# Findings pipe straight in
+Get-RMFinding -riskTypeId $riskTypeId | Suspend-RMFinding -durationDays 7 -reason 'Waiting for the vendor patch'
+
+# And back out again
+Get-RMFinding -status SNOOZED | Resume-RMFinding
+```
+
+### Recommendations and Remediations
+
+```powershell
+# Blueprint recommendations, and the tagged account counts under one of them
+Get-RMRecommendation
+Get-RMRecommendationTagCount -recommendationType SECURE_STANDING_ACCESS_UNIX_602 -entityTags production
+
+# System and custom remediations
+Get-RMRemediation -entityTypes USER
+
+New-RMRemediation -entityType USER -name 'Rotate Privileged Account Password' -remediationText 'Rotate the password using CyberArk Password Manager.'
+```
+
+### Risk Posture
+
+```powershell
+Get-RMRiskPostureDiscovery
+Get-RMRiskPostureProgress
+```
+
 ## Module Commands
 
-| Command            | Description                                         |
-| ------------------ | --------------------------------------------------- |
-| `Connect-RMTenant` | Authenticate to the Risk Management service          |
-| `Get-RMModuleData` | Get the module version & session configuration data |
+| Command                        | Description                                          |
+| ------------------------------ | ---------------------------------------------------- |
+| `Connect-RMTenant`             | Authenticate to the Risk Management service          |
+| `Get-RMRiskSummary`            | Get a hierarchical summary of risks                  |
+| `Get-RMRiskProgress`           | Get risk progress over time                          |
+| `Get-RMRiskType`               | List risks aggregated by risk type                   |
+| `Get-RMFinding`                | List risk findings                                   |
+| `Suspend-RMFinding`            | Snooze a finding                                     |
+| `Resume-RMFinding`             | Remove the snooze from a finding                     |
+| `Get-RMEntityRiskSummary`      | Get the risk summary of an entity                    |
+| `Get-RMRecommendation`         | List recommendations to reduce risk                  |
+| `Get-RMRecommendationTagCount` | Get the count of tagged entities under a recommendation |
+| `Get-RMRemediation`            | List remediations                                    |
+| `New-RMRemediation`            | Create a custom remediation                          |
+| `Get-RMRiskPostureDiscovery`   | Get the discovered accounts summary                  |
+| `Get-RMRiskPostureProgress`    | Get account onboarding progress over time            |
+| `Get-RMModuleData`             | Get the module version & session configuration data  |
 
 ## Installation
 

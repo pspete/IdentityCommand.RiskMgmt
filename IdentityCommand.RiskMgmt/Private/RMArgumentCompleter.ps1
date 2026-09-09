@@ -3,10 +3,30 @@
 
 #region Registration
 
-#Assets carry an address for infrastructure and a name for Identity applications, so label with
-#whichever is populated rather than picking one and showing blanks for half the estate.
-Register-ArgumentCompleter -ParameterName 'assetId' -ScriptBlock (
-    Get-ArgumentCompleter -RetrievalCommand 'Get-UPAsset' -ValueProperty 'assetId' -LabelProperty 'address'
-) -CommandName 'Get-UPAssetSecret'
+#entityTypes is documented with four allowed values but typed as a free string in the spec, so it
+#is offered as a completion rather than enforced with a ValidateSet.
+$EntityTypeCompleter = {
+    $wordToComplete = $args[2]
+    @('USER', 'FEDERATED_USER', 'FEDERATED_GROUP', 'WEBAPP') |
+        ForEach-Object { [pscustomobject]@{ entityType = $_ } } |
+        Get-CompletionResult -WordToComplete $wordToComplete -ValueProperty entityType
+}
+
+Register-ArgumentCompleter -ParameterName 'entityTypes' -ScriptBlock $EntityTypeCompleter -CommandName @(
+    'Get-RMFinding'
+    'Get-RMRemediation'
+    'Get-RMRiskProgress'
+    'Get-RMRiskType'
+)
+
+Register-ArgumentCompleter -ParameterName 'entityType' -ScriptBlock $EntityTypeCompleter -CommandName 'New-RMRemediation'
+
+Register-ArgumentCompleter -ParameterName 'recommendationType' -ScriptBlock (
+    Get-ArgumentCompleter -RetrievalCommand 'Get-RMRecommendation' -ValueProperty 'recommendationType'
+) -CommandName 'Get-RMRecommendationTagCount'
+
+Register-ArgumentCompleter -ParameterName 'ids' -ScriptBlock (
+    Get-ArgumentCompleter -RetrievalCommand 'Get-RMRemediation' -ValueProperty 'id' -LabelProperty 'name'
+) -CommandName 'Get-RMRemediation'
 
 #endregion Registration

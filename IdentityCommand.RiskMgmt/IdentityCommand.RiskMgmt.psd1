@@ -38,7 +38,20 @@
     # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
     FunctionsToExport = @(
         'Connect-RMTenant',
-        'Get-RMModuleData'
+        'Get-RMModuleData',
+        'Get-RMEntityRiskSummary',
+        'Get-RMFinding',
+        'Get-RMRecommendation',
+        'Get-RMRecommendationTagCount',
+        'Get-RMRemediation',
+        'Get-RMRiskPostureDiscovery',
+        'Get-RMRiskPostureProgress',
+        'Get-RMRiskProgress',
+        'Get-RMRiskSummary',
+        'Get-RMRiskType',
+        'New-RMRemediation',
+        'Resume-RMFinding',
+        'Suspend-RMFinding'
     )
 
     # Private data to pass to the module specified in RootModule/ModuleToProcess. This may also contain a PSData hashtable with additional module metadata used by PowerShell.
