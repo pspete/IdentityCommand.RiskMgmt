@@ -10,7 +10,7 @@
     RootModule        = 'IdentityCommand.RiskMgmt.psm1'
 
     # Version number of this module.
-    ModuleVersion     = '0.0'
+    ModuleVersion     = '0.1.0'
 
     # ID used to uniquely identify this module
     GUID              = 'aaf8c94c-d45b-450a-877f-72a45c067e50'

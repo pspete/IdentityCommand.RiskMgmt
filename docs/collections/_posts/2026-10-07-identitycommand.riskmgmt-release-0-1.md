@@ -1,12 +1,27 @@
-# Change Log
+---
+title: "IdentityCommand.RiskMgmt Release 0.1"
+date: 2026-10-07 00:00:00
+version: 0.1.0
+tags:
+  - Release Notes
+  - Connect-RMTenant
+  - Get-RMModuleData
+  - Get-RMRiskSummary
+  - Get-RMRiskProgress
+  - Get-RMRiskType
+  - Get-RMFinding
+  - Suspend-RMFinding
+  - Resume-RMFinding
+  - Get-RMEntityRiskSummary
+  - Get-RMRecommendation
+  - Get-RMRecommendationTagCount
+  - Get-RMRemediation
+  - New-RMRemediation
+  - Get-RMRiskPostureDiscovery
+  - Get-RMRiskPostureProgress
+---
 
-All notable changes to this project will be documented in this file.
-
-## Unreleased
-
-- N/A
-
-## [0.1.0] - 2026-10-07
+## [0.1.0]
 
 ### Added
 
@@ -27,4 +42,3 @@ All notable changes to this project will be documented in this file.
   custom one. Results are paginated automatically.
 - `Get-RMRiskPostureDiscovery`, `Get-RMRiskPostureProgress`: discovered account classification, and
   onboarding progress over time.
-
