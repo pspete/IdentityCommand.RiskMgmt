@@ -71,7 +71,7 @@ function Get-RMRiskType {
 
     process {
 
-        $URI = "$($ISPSSSession.tenant_url)/api/risks/risk-types"
+        $URI = "$(Resolve-RequestUrl)/api/risks/risk-types"
 
         #TODO: array filters travel as a percent encoded, comma joined single value
         #(severity=CRITICAL%2CHIGH). The spec sets no style/explode, whose OpenAPI default is one

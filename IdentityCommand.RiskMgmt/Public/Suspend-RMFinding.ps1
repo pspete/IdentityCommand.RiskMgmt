@@ -29,7 +29,7 @@ function Suspend-RMFinding {
 
     process {
 
-        $URI = "$($ISPSSSession.tenant_url)/api/risks/findings/$findingId/snooze"
+        $URI = "$(Resolve-RequestUrl)/api/risks/findings/$findingId/snooze"
 
         $body = $PSBoundParameters | Get-Parameter -ParametersToRemove findingId | ConvertTo-Json -Depth 8
 

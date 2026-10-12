@@ -86,7 +86,7 @@ function Get-RMFinding {
 
     process {
 
-        $URI = "$($ISPSSSession.tenant_url)/api/risks/findings"
+        $URI = "$(Resolve-RequestUrl)/api/risks/findings"
 
         #TODO: array filters travel as a percent encoded, comma joined single value
         #(severity=CRITICAL%2CHIGH). The spec sets no style/explode, whose OpenAPI default is one

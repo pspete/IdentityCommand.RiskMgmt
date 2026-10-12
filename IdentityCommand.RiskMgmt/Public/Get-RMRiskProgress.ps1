@@ -14,7 +14,7 @@ function Get-RMRiskProgress {
 
     process {
 
-        $URI = "$($ISPSSSession.tenant_url)/api/risks/progress"
+        $URI = "$(Resolve-RequestUrl)/api/risks/progress"
 
         #TODO: array filters travel as a percent encoded, comma joined single value
         #(severity=CRITICAL%2CHIGH). The spec sets no style/explode, whose OpenAPI default is one

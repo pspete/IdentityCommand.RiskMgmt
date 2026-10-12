@@ -35,7 +35,7 @@ function New-RMRemediation {
 
     process {
 
-        $URI = "$($ISPSSSession.tenant_url)/api/remediations"
+        $URI = "$(Resolve-RequestUrl)/api/remediations"
 
         $body = $PSBoundParameters | Get-Parameter | ConvertTo-Json -Depth 8
 

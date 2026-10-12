@@ -15,7 +15,7 @@ function Get-RMEntityRiskSummary {
 
     process {
 
-        $URI = "$($ISPSSSession.tenant_url)/api/entities/$entityId"
+        $URI = "$(Resolve-RequestUrl)/api/entities/$entityId"
 
         #Send Request
         Invoke-IDRestMethod -Uri $URI -Method GET

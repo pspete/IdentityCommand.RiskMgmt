@@ -21,7 +21,7 @@ function Get-RMRecommendationTagCount {
 
     process {
 
-        $URI = "$($ISPSSSession.tenant_url)/api/recommendations/$recommendationType/by-tags"
+        $URI = "$(Resolve-RequestUrl)/api/recommendations/$recommendationType/by-tags"
 
         #TODO: array filters travel as a percent encoded, comma joined single value
         #(severity=CRITICAL%2CHIGH). The spec sets no style/explode, whose OpenAPI default is one
