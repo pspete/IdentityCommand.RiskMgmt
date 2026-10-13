@@ -32,7 +32,7 @@ Describe 'Get-RMFinding' {
 
         InModuleScope -ModuleName $Script:RMModuleName {
             $ISPSSSession = [ordered]@{
-                tenant_url = 'https://somedomain.compass.cyberark.cloud'
+                tenant_url = 'https://somedomain-compass.cyberark.cloud'
                 User       = $null
                 TenantId   = 'SomeTenant'
                 SessionId  = 'SomeSession'
@@ -52,7 +52,7 @@ Describe 'Get-RMFinding' {
 
         It 'sends request to expected endpoint' {
             Should -Invoke -CommandName Invoke-IDRestMethod -ModuleName $Script:RMModuleName -ParameterFilter {
-                $URI -eq 'https://somedomain.compass.cyberark.cloud/api/risks/findings'
+                $URI -eq 'https://somedomain-compass.cyberark.cloud/api/risks/findings'
             } -Times 1 -Exactly -Scope It
         }
 
@@ -127,7 +127,7 @@ Describe 'Get-RMFinding' {
             }
 
             Mock -CommandName Resolve-ServiceUrl -ModuleName $Script:RMModuleName -MockWith {
-                [pscustomobject]@{ ServiceUrl = "https://$Subdomain.$Service.cyberark.cloud" }
+                [pscustomobject]@{ ServiceUrl = "https://$Subdomain-$Service.cyberark.cloud" }
             }
 
         }
@@ -135,14 +135,14 @@ Describe 'Get-RMFinding' {
         It 'resolves the service URL from the IdentityCommand session' {
             $null = Get-RMFinding
             Should -Invoke -CommandName Resolve-ServiceUrl -ModuleName $Script:RMModuleName -ParameterFilter {
-                $Service -eq 'compass' -and $Subdomain -eq 'sometenant'
+                $Service -eq 'compass' -and $Endpoint -eq 'bootstrap' -and $Subdomain -eq 'sometenant'
             } -Times 1 -Exactly -Scope It
         }
 
         It 'sends request to the resolved service URL' {
             $null = Get-RMFinding
             Should -Invoke -CommandName Invoke-IDRestMethod -ModuleName $Script:RMModuleName -ParameterFilter {
-                $URI -eq 'https://sometenant.compass.cyberark.cloud/api/risks/findings'
+                $URI -eq 'https://sometenant-compass.cyberark.cloud/api/risks/findings'
             } -Times 1 -Exactly -Scope It
         }
 

@@ -32,7 +32,7 @@ Describe 'Get-RMRiskType' {
 
         InModuleScope -ModuleName $Script:RMModuleName {
             $ISPSSSession = [ordered]@{
-                tenant_url = 'https://somedomain.compass.cyberark.cloud'
+                tenant_url = 'https://somedomain-compass.cyberark.cloud'
                 User       = $null
                 TenantId   = 'SomeTenant'
                 SessionId  = 'SomeSession'
@@ -52,7 +52,7 @@ Describe 'Get-RMRiskType' {
 
         It 'sends request to expected endpoint' {
             Should -Invoke -CommandName Invoke-IDRestMethod -ModuleName $Script:RMModuleName -ParameterFilter {
-                $URI -eq 'https://somedomain.compass.cyberark.cloud/api/risks/risk-types'
+                $URI -eq 'https://somedomain-compass.cyberark.cloud/api/risks/risk-types'
             } -Times 1 -Exactly -Scope It
         }
 
