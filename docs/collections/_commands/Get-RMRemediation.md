@@ -13,7 +13,7 @@ Lists remediations
 ## SYNTAX
 
 ```
-Get-RMRemediation [[-limit] <Int32>] [[-offset] <Int32>] [[-entityTypes] <String[]>] [[-ids] <String[]>]
+Get-RMRemediation [[-limit] <Int32>] [[-entityTypes] <String[]>] [[-ids] <String[]>]
  [<CommonParameters>]
 ```
 
@@ -49,21 +49,6 @@ Lists only the remediations defined on this tenant
 
 ### -limit
 The maximum number of items to return per request, between 1 and 1000. The service returns 100 when not specified.
-
-```yaml
-Type: Int32
-Parameter Sets: (All)
-Aliases: 
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
-### -offset
-The number of items to skip before returning results.
 
 ```yaml
 Type: Int32

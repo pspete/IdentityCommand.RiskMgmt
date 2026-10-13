@@ -13,13 +13,6 @@ function Get-RMRemediation {
             Mandatory = $false,
             ValueFromPipelinebyPropertyName = $true
         )]
-        [ValidateRange(0, 2147483647)]
-        [int]$offset,
-
-        [parameter(
-            Mandatory = $false,
-            ValueFromPipelinebyPropertyName = $true
-        )]
         [ValidateCount(1, 10)]
         [String[]]$entityTypes,
 

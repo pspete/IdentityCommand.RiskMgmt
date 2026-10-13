@@ -13,13 +13,6 @@ function Get-RMRiskType {
             Mandatory = $false,
             ValueFromPipelinebyPropertyName = $true
         )]
-        [ValidateRange(0, 2147483647)]
-        [int]$offset,
-
-        [parameter(
-            Mandatory = $false,
-            ValueFromPipelinebyPropertyName = $true
-        )]
         [ValidatePattern('^[a-zA-Z0-9_]+:(asc|desc)$')]
         [String]$sort,
 
