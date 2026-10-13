@@ -27,7 +27,7 @@ Describe 'Resume-RMFinding' {
 
         InModuleScope -ModuleName $Script:RMModuleName {
             $ISPSSSession = [ordered]@{
-                tenant_url = 'https://somedomain.compass.cyberark.cloud'
+                tenant_url = 'https://somedomain-compass.cyberark.cloud'
                 User       = $null
                 TenantId   = 'SomeTenant'
                 SessionId  = 'SomeSession'
@@ -47,7 +47,7 @@ Describe 'Resume-RMFinding' {
 
         It 'sends request to expected endpoint' {
             Should -Invoke -CommandName Invoke-IDRestMethod -ModuleName $Script:RMModuleName -ParameterFilter {
-                $URI -eq 'https://somedomain.compass.cyberark.cloud/api/risks/findings/F1/snooze'
+                $URI -eq 'https://somedomain-compass.cyberark.cloud/api/risks/findings/F1/snooze'
             } -Times 1 -Exactly -Scope It
         }
 
@@ -66,7 +66,7 @@ Describe 'Resume-RMFinding' {
         It 'accepts the finding id from the pipeline by property name' {
             [pscustomobject]@{ findingId = 'F2' } | Resume-RMFinding
             Should -Invoke -CommandName Invoke-IDRestMethod -ModuleName $Script:RMModuleName -ParameterFilter {
-                $URI -eq 'https://somedomain.compass.cyberark.cloud/api/risks/findings/F2/snooze'
+                $URI -eq 'https://somedomain-compass.cyberark.cloud/api/risks/findings/F2/snooze'
             } -Times 1 -Exactly -Scope It
         }
 

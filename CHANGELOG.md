@@ -4,9 +4,23 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+### Added
+
+- Commands find the Risk Management service url from the `IdentityCommand` session on first use, so no connection step is needed after `New-IDSession` or `New-IDPlatformToken`. Commands follow a later `New-IDSession` or `New-IDPlatformToken`, and fail after `Close-IDSession` until you authenticate again.
+
 ### Changed
 
+- Requires `IdentityCommand` 1.0.0.
 - CI caches the PowerShell modules it installs, so dependency installs skip the PowerShell Gallery on a cache hit.
+
+### Fixed
+
+- `401 Unauthorized` on every request: the service url resolves from the platform discovery `bootstrap` url.
+
+### Removed
+
+- `Connect-RMTenant`. Authenticate with `New-IDSession` or `New-IDPlatformToken` from `IdentityCommand` instead.
+- `-offset` from `Get-RMFinding`, `Get-RMRiskType` and `Get-RMRemediation`. Every page is retrieved automatically, and a starting offset returned duplicated and missing items.
 
 ## [0.1.0] - 2026-10-07
 

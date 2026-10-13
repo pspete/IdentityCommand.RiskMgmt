@@ -7,7 +7,7 @@ function Get-RMRiskPostureProgress {
 
     process {
 
-        $URI = "$($ISPSSSession.tenant_url)/api/risk-posture/secure-standing-privilege/progress"
+        $URI = "$(Resolve-RequestUrl)/api/risk-posture/secure-standing-privilege/progress"
 
         #Send Request
         Invoke-IDRestMethod -Uri $URI -Method GET

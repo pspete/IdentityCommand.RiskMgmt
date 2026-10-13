@@ -13,7 +13,7 @@ Lists risks aggregated by risk type
 ## SYNTAX
 
 ```
-Get-RMRiskType [[-limit] <Int32>] [[-offset] <Int32>] [[-sort] <String>] [[-search] <String>]
+Get-RMRiskType [[-limit] <Int32>] [[-sort] <String>] [[-search] <String>]
  [[-severity] <String[]>] [[-entityTypes] <String[]>] [[-entityId] <String[]>] [[-targetId] <String[]>]
  [[-daysSinceLastUpdate] <Int32>] [<CommonParameters>]
 ```
@@ -52,21 +52,6 @@ Lists the risk types which apply to applications
 
 ### -limit
 The maximum number of items to return per request, between 1 and 1000. The service returns 100 when not specified.
-
-```yaml
-Type: Int32
-Parameter Sets: (All)
-Aliases: 
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
-### -offset
-The number of items to skip before returning results.
 
 ```yaml
 Type: Int32

@@ -26,24 +26,16 @@ The module requires authentication to the Idira Identity platform using the `Ide
 
 The `IdentityCommand` module must be installed and available in order to use `IdentityCommand.RiskMgmt`.
 
-The `Connect-RMTenant` command initialises the bearer token used for module operations against the Risk Management service.
-
-If an Identity session already exists (established with the `IdentityCommand` module's `New-IDSession` or `New-IDPlatformToken`), it is used as-is:
+Authenticate with the `IdentityCommand` module, using `New-IDSession` (interactive user, including any MFA challenges) or `New-IDPlatformToken` (non-interactive service user). Commands find the Risk Management service url from the Identity session on first use - no separate connection step is needed:
 
 ```powershell
-# Resolve the Risk Management url automatically from the shared services subdomain
-Connect-RMTenant -tenant_subdomain sometenant
+# Interactive user authentication
+New-IDSession -tenant_url https://abc1234.id.cyberark.cloud -Credential $Credential
 
-# Or provide the Risk Management tenant url directly
-Connect-RMTenant -tenant_url https://sometenant.compass.cyberark.cloud
+# Or non-interactive service user authentication via an OAuth platform token
+New-IDPlatformToken -tenant_url https://abc1234.id.cyberark.cloud -Credential $ServiceUserCredential
+
+Get-RMFinding
 ```
 
-Otherwise, provide a credential and `Connect-RMTenant` authenticates to Idira Identity for you - the Identity tenant url is discovered from the same subdomain / url:
-
-```powershell
-# Interactive user authentication (any MFA challenges are handled by IdentityCommand)
-Connect-RMTenant -tenant_subdomain sometenant -Credential $Credential
-
-# Non-interactive service user authentication via an OAuth platform token
-Connect-RMTenant -tenant_subdomain sometenant -Credential $ServiceUserCredential -PlatformToken
-```
+Commands follow the current Identity session: a later `New-IDSession` or `New-IDPlatformToken` is used by the next command, and after `Close-IDSession` commands fail until you authenticate again.

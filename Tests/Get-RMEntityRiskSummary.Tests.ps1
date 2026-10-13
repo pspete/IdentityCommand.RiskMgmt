@@ -27,7 +27,7 @@ Describe 'Get-RMEntityRiskSummary' {
 
         InModuleScope -ModuleName $Script:RMModuleName {
             $ISPSSSession = [ordered]@{
-                tenant_url = 'https://somedomain.compass.cyberark.cloud'
+                tenant_url = 'https://somedomain-compass.cyberark.cloud'
                 User       = $null
                 TenantId   = 'SomeTenant'
                 SessionId  = 'SomeSession'
@@ -47,7 +47,7 @@ Describe 'Get-RMEntityRiskSummary' {
 
         It 'sends request to expected endpoint' {
             Should -Invoke -CommandName Invoke-IDRestMethod -ModuleName $Script:RMModuleName -ParameterFilter {
-                $URI -eq 'https://somedomain.compass.cyberark.cloud/api/entities/12345'
+                $URI -eq 'https://somedomain-compass.cyberark.cloud/api/entities/12345'
             } -Times 1 -Exactly -Scope It
         }
 
@@ -60,7 +60,7 @@ Describe 'Get-RMEntityRiskSummary' {
         It 'accepts the entity id from the pipeline by property name' {
             [pscustomobject]@{ entityId = '67890' } | Get-RMEntityRiskSummary
             Should -Invoke -CommandName Invoke-IDRestMethod -ModuleName $Script:RMModuleName -ParameterFilter {
-                $URI -eq 'https://somedomain.compass.cyberark.cloud/api/entities/67890'
+                $URI -eq 'https://somedomain-compass.cyberark.cloud/api/entities/67890'
             } -Times 1 -Exactly -Scope It
         }
     }

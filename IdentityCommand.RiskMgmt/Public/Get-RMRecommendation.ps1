@@ -7,7 +7,7 @@ function Get-RMRecommendation {
 
     process {
 
-        $URI = "$($ISPSSSession.tenant_url)/api/recommendations"
+        $URI = "$(Resolve-RequestUrl)/api/recommendations"
 
         #Send Request
         $result = Invoke-IDRestMethod -Uri $URI -Method GET
