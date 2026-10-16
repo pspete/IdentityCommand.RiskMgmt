@@ -1,3 +1,7 @@
+![Logo][Logo]
+
+[Logo]: /docs/media/images/IdentityCommand.RiskMgmt.png
+
 # IdentityCommand.RiskMgmt
 
 **IdentityCommand.RiskMgmt** is a PowerShell module that provides a set of easy-to-use commands, allowing you to interact with the **CyberArk Risk Management API** from within the PowerShell environment.
