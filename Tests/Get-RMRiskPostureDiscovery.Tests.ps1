@@ -27,7 +27,7 @@ Describe 'Get-RMRiskPostureDiscovery' {
 
         InModuleScope -ModuleName $Script:RMModuleName {
             $ISPSSSession = [ordered]@{
-                tenant_url = 'https://somedomain.compass.cyberark.cloud'
+                tenant_url = 'https://somedomain-compass.cyberark.cloud'
                 User       = $null
                 TenantId   = 'SomeTenant'
                 SessionId  = 'SomeSession'
@@ -47,7 +47,7 @@ Describe 'Get-RMRiskPostureDiscovery' {
 
         It 'sends request to expected endpoint' {
             Should -Invoke -CommandName Invoke-IDRestMethod -ModuleName $Script:RMModuleName -ParameterFilter {
-                $URI -eq 'https://somedomain.compass.cyberark.cloud/api/risk-posture/secure-standing-privilege/discovery'
+                $URI -eq 'https://somedomain-compass.cyberark.cloud/api/risk-posture/secure-standing-privilege/discovery'
             } -Times 1 -Exactly -Scope It
         }
 

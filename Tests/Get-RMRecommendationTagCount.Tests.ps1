@@ -27,7 +27,7 @@ Describe 'Get-RMRecommendationTagCount' {
 
         InModuleScope -ModuleName $Script:RMModuleName {
             $ISPSSSession = [ordered]@{
-                tenant_url = 'https://somedomain.compass.cyberark.cloud'
+                tenant_url = 'https://somedomain-compass.cyberark.cloud'
                 User       = $null
                 TenantId   = 'SomeTenant'
                 SessionId  = 'SomeSession'
@@ -47,7 +47,7 @@ Describe 'Get-RMRecommendationTagCount' {
 
         It 'sends request to expected endpoint' {
             Should -Invoke -CommandName Invoke-IDRestMethod -ModuleName $Script:RMModuleName -ParameterFilter {
-                $URI -like 'https://somedomain.compass.cyberark.cloud/api/recommendations/SECURE_STANDING_ACCESS_UNIX_602/by-tags`?*'
+                $URI -like 'https://somedomain-compass.cyberark.cloud/api/recommendations/SECURE_STANDING_ACCESS_UNIX_602/by-tags`?*'
             } -Times 1 -Exactly -Scope It
         }
 

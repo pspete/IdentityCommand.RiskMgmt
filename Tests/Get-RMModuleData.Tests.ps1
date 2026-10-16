@@ -1,3 +1,11 @@
+#InModuleScope below runs at discovery, so the module must be imported before then
+BeforeDiscovery {
+    $ManifestPath = Join-Path (Resolve-Path "$(Split-Path -Parent $PSCommandPath)\..\IdentityCommand.RiskMgmt") 'IdentityCommand.RiskMgmt.psd1'
+    if ( -not (Get-Module -Name 'IdentityCommand.RiskMgmt' -All)) {
+        Import-Module -Name "$ManifestPath" -ArgumentList $true -Force -ErrorAction Stop
+    }
+}
+
 Describe $($PSCommandPath -Replace '.Tests.ps1') {
 
     BeforeAll {
@@ -26,7 +34,7 @@ Describe $($PSCommandPath -Replace '.Tests.ps1') {
         BeforeEach {
 
             $ISPSSSession = [ordered]@{
-                tenant_url         = 'https://somedomain.compass.cyberark.cloud'
+                tenant_url         = 'https://somedomain-compass.cyberark.cloud'
                 User               = $null
                 TenantId           = 'SomeTenant'
                 SessionId          = 'SomeSession'

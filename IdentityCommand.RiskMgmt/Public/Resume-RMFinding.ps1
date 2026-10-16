@@ -15,7 +15,7 @@ function Resume-RMFinding {
 
     process {
 
-        $URI = "$($ISPSSSession.tenant_url)/api/risks/findings/$findingId/snooze"
+        $URI = "$(Resolve-RequestUrl)/api/risks/findings/$findingId/snooze"
 
         if ($PSCmdlet.ShouldProcess($findingId, 'Remove Snooze From Finding')) {
 

@@ -7,7 +7,7 @@ function Get-RMRiskSummary {
 
     process {
 
-        $URI = "$($ISPSSSession.tenant_url)/api/risks/summary"
+        $URI = "$(Resolve-RequestUrl)/api/risks/summary"
 
         #Send Request
         Invoke-IDRestMethod -Uri $URI -Method GET

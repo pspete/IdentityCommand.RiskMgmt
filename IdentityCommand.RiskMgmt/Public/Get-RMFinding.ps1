@@ -13,13 +13,6 @@ function Get-RMFinding {
             Mandatory = $false,
             ValueFromPipelinebyPropertyName = $true
         )]
-        [ValidateRange(0, 2147483647)]
-        [int]$offset,
-
-        [parameter(
-            Mandatory = $false,
-            ValueFromPipelinebyPropertyName = $true
-        )]
         [ValidatePattern('^[a-zA-Z0-9_]+:(asc|desc)$')]
         [String]$sort,
 
@@ -86,11 +79,8 @@ function Get-RMFinding {
 
     process {
 
-        $URI = "$($ISPSSSession.tenant_url)/api/risks/findings"
+        $URI = "$(Resolve-RequestUrl)/api/risks/findings"
 
-        #TODO: array filters travel as a percent encoded, comma joined single value
-        #(severity=CRITICAL%2CHIGH). The spec sets no style/explode, whose OpenAPI default is one
-        #parameter per value. Verify against a tenant.
         $URI = Add-QueryString -URI $URI -Parameter ($PSBoundParameters | Get-Parameter)
 
         #Send Request

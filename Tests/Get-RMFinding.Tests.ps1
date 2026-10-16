@@ -32,7 +32,7 @@ Describe 'Get-RMFinding' {
 
         InModuleScope -ModuleName $Script:RMModuleName {
             $ISPSSSession = [ordered]@{
-                tenant_url = 'https://somedomain.compass.cyberark.cloud'
+                tenant_url = 'https://somedomain-compass.cyberark.cloud'
                 User       = $null
                 TenantId   = 'SomeTenant'
                 SessionId  = 'SomeSession'
@@ -52,7 +52,7 @@ Describe 'Get-RMFinding' {
 
         It 'sends request to expected endpoint' {
             Should -Invoke -CommandName Invoke-IDRestMethod -ModuleName $Script:RMModuleName -ParameterFilter {
-                $URI -eq 'https://somedomain.compass.cyberark.cloud/api/risks/findings'
+                $URI -eq 'https://somedomain-compass.cyberark.cloud/api/risks/findings'
             } -Times 1 -Exactly -Scope It
         }
 
@@ -101,6 +101,51 @@ Describe 'Get-RMFinding' {
 
             (Get-RMFinding | Measure-Object).Count | Should -Be 2
         }
+    }
+
+    Context 'Without a module session' {
+
+        BeforeEach {
+
+            InModuleScope -ModuleName $Script:RMModuleName {
+                $ISPSSSession = [ordered]@{
+                    tenant_url = $null
+                    Subdomain  = $null
+                    StartTime  = $null
+                    WebSession = $null
+                }
+                New-Variable -Name ISPSSSession -Value $ISPSSSession -Scope Script -Force
+            }
+
+            Mock -CommandName Get-IDSession -ModuleName $Script:RMModuleName -MockWith {
+                [ordered]@{
+                    tenant_url = 'https://sometenant.id.cyberark.cloud'
+                    Subdomain  = 'sometenant'
+                    StartTime  = Get-Date '2026-01-01T09:00:00'
+                    WebSession = New-Object Microsoft.PowerShell.Commands.WebRequestSession
+                }
+            }
+
+            Mock -CommandName Resolve-ServiceUrl -ModuleName $Script:RMModuleName -MockWith {
+                [pscustomobject]@{ ServiceUrl = "https://$Subdomain-$Service.cyberark.cloud" }
+            }
+
+        }
+
+        It 'resolves the service URL from the IdentityCommand session' {
+            $null = Get-RMFinding
+            Should -Invoke -CommandName Resolve-ServiceUrl -ModuleName $Script:RMModuleName -ParameterFilter {
+                $Service -eq 'compass' -and $Endpoint -eq 'bootstrap' -and $Subdomain -eq 'sometenant'
+            } -Times 1 -Exactly -Scope It
+        }
+
+        It 'sends request to the resolved service URL' {
+            $null = Get-RMFinding
+            Should -Invoke -CommandName Invoke-IDRestMethod -ModuleName $Script:RMModuleName -ParameterFilter {
+                $URI -eq 'https://sometenant-compass.cyberark.cloud/api/risks/findings'
+            } -Times 1 -Exactly -Scope It
+        }
+
     }
 
 }
